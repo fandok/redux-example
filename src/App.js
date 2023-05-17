@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addData, deleteData } from "./actions";
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  // Selects the state value from the store.
+  const todo = useSelector((state) => state.data.todo);
+  // Dispatches action to add the data
+  const handleAddData = () => dispatch(addData());
+  // Dispatches action to delete the data.
+  const handleDeleteData = () => dispatch(deleteData());
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={handleAddData}>Add Data</button>
+      <button onClick={handleDeleteData}>Delete Data</button>
+
+      {todo.length > 0 &&
+        todo.map((val, key) => <div key={key}>{JSON.stringify(val)}</div>)}
     </div>
   );
-}
+};
 
 export default App;
